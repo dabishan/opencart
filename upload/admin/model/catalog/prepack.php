@@ -45,5 +45,69 @@ class ModelCatalogPrepack extends Model {
 		return $query->rows;
 	}
 
+	public function getPrepack($prepack_id) {
+	    $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "prepack` p LEFT JOIN `" . DB_PREFIX . "prepack_description` pd ON 
+	    	(p.prepack_id = pd.prepack_id) WHERE
+	    	p.prepack_id = '" . (int)$prepack_id . "' AND
+	    	pd.language_id = '" . $this->config->get('config_language_id') ."'");
+
+
+	    return $query->row;
+    }
+
+	public function getPrepackDescriptions($prepack_id) {
+		$prepack_data = array();
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "prepack_description` WHERE prepack_id = '" . (int)$prepack_id . "'");
+
+		foreach ($query->rows as $result) {
+			$prepack_data[$result['language_id']] = array('description' => $result['description']);
+		}
+
+		return $prepack_data;
+	}
+
+	public function addPrepack($data) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "prepack` SET name = '". $this->db->escape($data['name']) . "', sort_order= '" . $this->db->escape($data['sort_order']) . "'");
+		$prepack_id = $this->db->getLastId();
+
+		foreach ($data['prepack_description'] as $language_id => $value) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "prepack_description SET
+				prepack_id = '" . (int)$prepack_id . "',
+				language_id = '" .(int)$language_id . "',
+				description = '" . $this->db->escape($value['description']) . "'"
+			);
+
+		}
+
+		return $prepack_id;
+	}
+
+	public function editPrepack($prepack_id, $data) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "prepack` SET 
+		    name = '" . $this->db->escape($data['name']) . "',
+			sort_order = '" . $this->db->escape($data['sort_order']) . "'
+			WHERE prepack_id='" . (int)$prepack_id . "'"
+			);
+
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "prepack_description` WHERE prepack_id= '" . (int)$prepack_id ."'");
+
+		foreach ($data['prepack_description'] as $language_id => $value) {
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "prepack_description` SET 
+				prepack_id = '" . (int)$prepack_id . "',
+				language_id = '" . (int)($language_id) . "',
+				description = '" . $this->db->escape($value['description']) ."'"
+			);
+		}
+	}
+
+	public function deletePrepack($prepack_id) {
+	    $this->db->query("DELETE FROM `" . DB_PREFIX . "prepack` WHERE 
+	        prepack_id='" . (int)$prepack_id . "'" );
+
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "prepack_description` WHERE 
+	        prepack_id='" . (int)$prepack_id . "'" );
+
+    }
 
 }
