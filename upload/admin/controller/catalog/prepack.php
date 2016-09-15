@@ -304,7 +304,6 @@ class ControllerCatalogPrepack extends Controller {
 			$data['prepacks'][] = array(
 				'prepack_id' => $result['prepack_id'],
 				'name'       => $result['name'],
-				'desc'       => $result['desc'],
 				'sort_order' => $result['sort_order'],
 				'edit'       => $this->url->link('catalog/prepack/edit', 'token=' . $this->session->data['token'] . '&prepack_id=' . $result['prepack_id'] . $url, 'SSL')
 				);
