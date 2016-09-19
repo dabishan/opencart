@@ -545,7 +545,7 @@
                         </div>
                       </div>
                       <?php } ?>
-                      <?php if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') { ?>
+                      <?php if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'counter' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') { ?>
                       <div class="table-responsive">
                         <table id="option-value<?php echo $option_row; ?>" class="table table-striped table-bordered table-hover">
                           <thead>
@@ -1196,7 +1196,7 @@ $('input[name=\'option\']').autocomplete({
 			html += '	</div>';
 		}
 
-		if (item['type'] == 'select' || item['type'] == 'radio' || item['type'] == 'checkbox' || item['type'] == 'image') {
+		if (item['type'] == 'select' || item['type'] == 'radio' || item['type'] == 'counter' || item['type'] == 'checkbox' || item['type'] == 'image') {
 			html += '<div class="table-responsive">';
 			html += '  <table id="option-value' + option_row + '" class="table table-striped table-bordered table-hover">';
 			html += '  	 <thead>';

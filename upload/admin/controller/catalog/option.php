@@ -265,6 +265,7 @@ class ControllerCatalogOption extends Controller {
 		$data['text_form'] = !isset($this->request->get['option_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_choose'] = $this->language->get('text_choose');
 		$data['text_select'] = $this->language->get('text_select');
+        $data['text_counter'] = $this->language->get('text_counter');
 		$data['text_radio'] = $this->language->get('text_radio');
 		$data['text_checkbox'] = $this->language->get('text_checkbox');
 		$data['text_input'] = $this->language->get('text_input');
@@ -422,7 +423,7 @@ class ControllerCatalogOption extends Controller {
 			}
 		}
 
-		if (($this->request->post['type'] == 'select' || $this->request->post['type'] == 'radio' || $this->request->post['type'] == 'checkbox') && !isset($this->request->post['option_value'])) {
+		if (($this->request->post['type'] == 'select' || $this->request->post['type']== 'counter' || $this->request->post['type'] == 'radio' || $this->request->post['type'] == 'checkbox') && !isset($this->request->post['option_value'])) {
 			$this->error['warning'] = $this->language->get('error_type');
 		}
 
@@ -478,7 +479,7 @@ class ControllerCatalogOption extends Controller {
 			foreach ($options as $option) {
 				$option_value_data = array();
 
-				if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'checkbox' || $option['type'] == 'image') {
+				if ($option['type'] == 'select' || $option['type'] == 'counter' || $option['type'] == 'radio' || $option['type'] == 'checkbox' || $option['type'] == 'image') {
 					$option_values = $this->model_catalog_option->getOptionValues($option['option_id']);
 
 					foreach ($option_values as $option_value) {
@@ -509,6 +510,10 @@ class ControllerCatalogOption extends Controller {
 				if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'checkbox') {
 					$type = $this->language->get('text_choose');
 				}
+
+                if ($option['type'] == 'counter') {
+                    $type = $this->language->get('text_counter');
+                }
 
 				if ($option['type'] == 'text' || $option['type'] == 'textarea') {
 					$type = $this->language->get('text_input');

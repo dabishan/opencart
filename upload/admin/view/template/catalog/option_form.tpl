@@ -53,6 +53,11 @@
                 <?php } else { ?>
                 <option value="radio"><?php echo $text_radio; ?></option>
                 <?php } ?>
+                <?php if ($type == 'counter') { ?>
+                <option value="counter" selected="selected"><?php echo $text_counter; ?></option>
+                <?php } else { ?>
+                <option value="counter"><?php echo $text_counter; ?></option>
+                <?php } ?>
                 <?php if ($type == 'checkbox') { ?>
                 <option value="checkbox" selected="selected"><?php echo $text_checkbox; ?></option>
                 <?php } else { ?>
@@ -147,7 +152,7 @@
   </div>
   <script type="text/javascript"><!--
 $('select[name=\'type\']').on('change', function() {
-	if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox' || this.value == 'image') {
+	if (this.value == 'select' || this.value == 'radio' || this.value == 'counter' || this.value == 'checkbox' || this.value == 'image') {
 		$('#option-value').show();
 	} else {
 		$('#option-value').hide();
