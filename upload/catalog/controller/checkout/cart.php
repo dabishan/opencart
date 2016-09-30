@@ -46,6 +46,17 @@ class ControllerCheckoutCart extends Controller {
 				$data['error_warning'] = '';
 			}
 
+            // Sets error message for not fulfilling checkout limit
+            if ($this->cart->getSubTotal() < $this->config->get('config_checkout_limit')) {
+                $data['error_warning'] = sprintf($this->language->get('error_checkout_limit'), $this->config->get('config_checkout_limit'));
+            } elseif (isset($this->session->data['error'])) {
+                $data['error_warning'] = $this->session->data['error'];
+
+                unset($this->session->data['error']);
+            } else {
+                $data['error_warning'] = '';
+            }
+
 			if ($this->config->get('config_customer_price') && !$this->customer->isLogged()) {
 				$data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login'), $this->url->link('account/register'));
 			} else {

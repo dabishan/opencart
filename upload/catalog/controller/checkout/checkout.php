@@ -23,6 +23,11 @@ class ControllerCheckoutCheckout extends Controller {
 			}
 		}
 
+		// Validates Subtotal with Checkout Limit
+        if ($this->cart->getSubTotal() < $this->config->get('config_checkout_limit')) {
+            $this->response->redirect($this->url->link('checkout/cart'));
+        }
+
 		$this->load->language('checkout/checkout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
