@@ -442,6 +442,15 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-checkout-limit"><span data-toggle="tooltip" title="<?php echo $help_checkout_limit; ?>"><?php echo $entry_checkout_limit; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_checkout_limit" value="<?php echo $config_checkout_limit; ?>" placeholder="<?php echo $entry_checkout_limit; ?>" id="input-checkout-limit" class="form-control" />
+                    <?php if ($error_checkout_limit) { ?>
+                    <div class="text-danger"><?php echo $error_checkout_limit; ?></div>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-checkout"><span data-toggle="tooltip" title="<?php echo $help_checkout; ?>"><?php echo $entry_checkout; ?></span></label>
                   <div class="col-sm-10">
                     <select name="config_checkout_id" id="input-checkout" class="form-control">

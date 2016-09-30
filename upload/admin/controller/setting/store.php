@@ -221,6 +221,7 @@ class ControllerSettingStore extends Controller {
 		$data['entry_logo'] = $this->language->get('entry_logo');
 		$data['entry_icon'] = $this->language->get('entry_icon');
 		$data['entry_secure'] = $this->language->get('entry_secure');
+        $data['entry_checkout_limit'] = $this->language->get('entry_checkout_limit');
 
 		$data['help_url'] = $this->language->get('help_url');
 		$data['help_ssl'] = $this->language->get('help_ssl');
@@ -242,6 +243,7 @@ class ControllerSettingStore extends Controller {
 		$data['help_stock_checkout'] = $this->language->get('help_stock_checkout');
 		$data['help_icon'] = $this->language->get('help_icon');
 		$data['help_secure'] = $this->language->get('help_secure');
+        $data['help_checkout_limit'] = $this->language->get('help_checkout_limit');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -306,6 +308,12 @@ class ControllerSettingStore extends Controller {
 		} else {
 			$data['error_customer_group_display'] = '';
 		}
+
+        if (isset($this->error['checkout_limit'])) {
+            $data['error_checkout_limit'] = $this->error['checkout_limit'];
+        } else {
+            $data['error_checkout_limit'] = '';
+        }
 
 		$data['breadcrumbs'] = array();
 
@@ -658,6 +666,14 @@ class ControllerSettingStore extends Controller {
 			$data['config_checkout_guest'] = '';
 		}
 
+        if (isset($this->request->post['config_checkout_limit'])) {
+            $data['config_checkout_limit'] = $this->request->post['config_checkout_limit'];
+        } elseif (isset($store_info['config_checkout_guest'])) {
+            $data['config_checkout_limit'] = $store_info['config_checkout_limit'];
+        } else {
+            $data['config_checkout_limit'] = 0;
+        }
+
 		if (isset($this->request->post['config_checkout_id'])) {
 			$data['config_checkout_id'] = $this->request->post['config_checkout_id'];
 		} elseif (isset($store_info['config_checkout_id'])) {
@@ -779,6 +795,10 @@ class ControllerSettingStore extends Controller {
 		if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {
 			$this->error['customer_group_display'] = $this->language->get('error_customer_group_display');
 		}
+
+        if (!is_numeric($this->request->post['config_checkout_limit']) || ($this->request->post['config_checkout_limit'] < 0 )) {
+            $this->error['checkout_limit'] = $this->language->get('error_checkout_limit');
+        }
 
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->language->get('error_warning');

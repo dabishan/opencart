@@ -150,7 +150,8 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_error_display'] = $this->language->get('entry_error_display');
 		$data['entry_error_log'] = $this->language->get('entry_error_log');
 		$data['entry_error_filename'] = $this->language->get('entry_error_filename');
-		$data['entry_status'] = $this->language->get('entry_status');
+        $data['entry_status'] = $this->language->get('entry_status');
+        $data['entry_checkout_limit'] = $this->language->get('entry_checkout_limit');
 
 		$data['help_geocode'] = $this->language->get('help_geocode');
 		$data['help_open'] = $this->language->get('help_open');
@@ -211,7 +212,8 @@ class ControllerSettingSetting extends Controller {
 		$data['help_maintenance'] = $this->language->get('help_maintenance');
 		$data['help_password'] = $this->language->get('help_password');
 		$data['help_encryption'] = $this->language->get('help_encryption');
-		$data['help_compression'] = $this->language->get('help_compression');
+        $data['help_compression'] = $this->language->get('help_compression');
+        $data['help_checkout_limit'] = $this->language->get('help_checkout_limit');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -290,6 +292,12 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['error_login_attempts'] = '';
 		}
+
+        if (isset($this->error['checkout_limit'])) {
+            $data['error_checkout_limit'] = $this->error['checkout_limit'];
+        } else {
+            $data['error_checkout_limit'] = '';
+        }
 
 		if (isset($this->error['voucher_min'])) {
 			$data['error_voucher_min'] = $this->error['voucher_min'];
@@ -720,6 +728,14 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_checkout_guest'] = $this->config->get('config_checkout_guest');
 		}
+
+        if (isset($this->request->post['config_checkout_limit'])) {
+            $data['config_checkout_limit'] = $this->request->post['config_checkout_limit'];
+        } elseif ($this->config->get('config_checkout_limit')) {
+            $data['config_checkout_limit'] = $this->config->get('config_checkout_limit');
+        } else {
+            $data['config_checkout_limit'] = 0;
+        }
 
 		if (isset($this->request->post['config_checkout_id'])) {
 			$data['config_checkout_id'] = $this->request->post['config_checkout_id'];
@@ -1183,6 +1199,10 @@ class ControllerSettingSetting extends Controller {
 		if ($this->request->post['config_login_attempts'] < 1) {
 			$this->error['login_attempts'] = $this->language->get('error_login_attempts');
 		}
+
+        if (!is_numeric($this->request->post['config_checkout_limit']) || ($this->request->post['config_checkout_limit'] < 0 )) {
+            $this->error['checkout_limit'] = $this->language->get('error_checkout_limit');
+        }
 
 		if (!$this->request->post['config_voucher_min']) {
 			$this->error['voucher_min'] = $this->language->get('error_voucher_min');

@@ -60,6 +60,7 @@ $_['entry_stock_checkout']         = 'Stock Checkout';
 $_['entry_logo']                   = 'Store Logo';
 $_['entry_icon']                   = 'Icon';
 $_['entry_secure']                 = 'Use SSL';
+$_['entry_checkout_limit']         = 'Checkout Limit';
 
 // Help
 $_['help_url']                     = 'Include the full URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
@@ -82,6 +83,7 @@ $_['help_stock_display']           = 'Display stock quantity on the product page
 $_['help_stock_checkout']          = 'Allow customers to still checkout if the products they are ordering are not in stock.';
 $_['help_icon']                    = 'The icon should be a PNG that is 16px x 16px.';
 $_['help_secure']                  = 'To use SSL check with your host if a SSL certificate is installed.';
+$_['help_checkout_limit']          = 'Limit to be met before customer can checkout out.';
 
 // Error
 $_['error_warning']                = 'Warning: Please check the form carefully for errors!';
@@ -96,3 +98,4 @@ $_['error_telephone']              = 'Telephone must be between 3 and 32 charact
 $_['error_customer_group_display'] = 'You must include the default customer group if you are going to use this feature!';
 $_['error_default']                = 'Warning: You can not delete your default store!';
 $_['error_store']                  = 'Warning: This Store cannot be deleted as it is currently assigned to %s orders!';
+$_['error_checkout_limit']         = 'Checkout Limit should be a positive numerical value!';
